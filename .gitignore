@@ -1,0 +1,4 @@
+mongo_volume
+**/node_modules
+**/dist
+**/.env

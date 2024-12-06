@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "build": "tsc && cp ./package.json ./package-lock.json ./dist"
+  },
+  "author": "mxace",
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}

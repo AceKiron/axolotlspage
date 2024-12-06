@@ -1,0 +1,42 @@
+name: axolotlspage
+
+services:
+  mongo:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo_volume:/data/db
+    networks:
+      - app
+  
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      target: production
+    restart: unless-stopped
+    env_file: ./api/.env
+    ports:
+      - 3157:3157
+    networks:
+      - app
+    depends_on:
+      - mongo
+  
+  frontend:
+    build:
+      context: ./www
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./www/.env
+    ports:
+      - 8080:8080
+    networks:
+      - app
+    depends_on:
+      - api
+
+networks:
+  app:
+    driver: bridge
