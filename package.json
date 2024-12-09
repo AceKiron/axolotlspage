@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "cookie-parser": "^1.4.7",
-    "mongoose": "^8.8.4"
-  },
-  "devDependencies": {
-    "@types/cookie-parser": "^1.4.8"
-  }
-}

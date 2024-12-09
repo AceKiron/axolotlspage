@@ -1,19 +1,17 @@
-import UserModel, { UserDocument } from "../models/user.model";
+import Mongoose from "mongoose";
+import Bcrypt from "bcrypt";
+
+import UserModel from "../models/user.model";
 import AppError from "../utils/appError";
-import { CONFLICT } from "../constants/http";
+import { CONFLICT, UNAUTHORIZED } from "../constants/http";
+import AppResult from "../constants/appResult";
+import { PASSWORD_SECRET } from "../constants/env";
 
 type RegisterUserPayload = {
     email: string;
     password: string;
 }
-type RegisterUserResult = {
-    success: true;
-    document: UserDocument;
-} | {
-    success: false;
-    err: AppError;
-}
-export const registerUser = async (payload: RegisterUserPayload): Promise<RegisterUserResult> => {
+export const registerUser = async (payload: RegisterUserPayload): Promise<AppResult<Mongoose.ObjectId>> => {
     if (await UserModel.exists({
         email: payload.email
     })) {
@@ -23,12 +21,57 @@ export const registerUser = async (payload: RegisterUserPayload): Promise<Regist
         };
     }
 
+    const model = new UserModel({
+        email: payload.email,
+        password: await Bcrypt.hash(payload.password + PASSWORD_SECRET, await Bcrypt.genSalt())
+    });
+
+    await model.save();
+
     return {
         success: true,
-        document: await new UserModel({
-            email: payload.email,
-            passwordSalt: "ABC",
-            passwordHash: payload.password + "D"
-        }).save()
+        data: model._id
     };
+}
+
+type LoginUserPayload = {
+    email: string;
+    password: string;
+}
+export const loginUser = async (payload: LoginUserPayload): Promise<AppResult<Mongoose.ObjectId>> => {
+    const user = await UserModel.findOne({
+        email: payload.email
+    });
+
+    if (user) {
+        if (await user.comparePassword(payload.password)) {
+            return {
+                success: true,
+                data: user._id
+            };
+        } else {
+            return {
+                success: false,
+                err: new AppError(UNAUTHORIZED, `Incorrect email or password provided.`)
+            };
+        }
+    }
+    
+    return {
+        success: false,
+        err: new AppError(UNAUTHORIZED, `Incorrect email or password provided.`)
+    };
+
+    // const model = new UserModel({
+    //     email: payload.email,
+    //     passwordSalt: "ABC",
+    //     passwordHash: payload.password + "D"
+    // });
+
+    // await model.save();
+
+    // return {
+    //     success: true,
+    //     data: model._id
+    // };
 }

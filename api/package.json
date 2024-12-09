@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "dev": "ts-node-dev src",
     "build": "tsc && cp ./package.json ./package-lock.json ./dist"
   },
   "author": "mxace",
