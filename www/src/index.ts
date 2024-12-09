@@ -23,6 +23,7 @@ function StaticFile(filename: string, contentType: string): void {
 }
 
 StaticFile("bundle.css", "text/css");
+StaticFile("js/index.js", "text/javascript");
 
 App.get("/", (req, res) => {
     res.render("test.njk", {
@@ -30,6 +31,6 @@ App.get("/", (req, res) => {
     });
 });
 
-App.listen(8080, () => {
-    console.log("Listening on http://localhost:8080/")
+App.listen(8080, async () => {
+    console.log("Listening on http://localhost:8080/");
 });

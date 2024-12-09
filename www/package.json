@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "tsc && cp ./package.json ./package-lock.json ./dist && mkdir ./dist/static && cp -r ./src/nunjucks ./dist/static"
+    "build": "tsc && cp ./package.json ./package-lock.json ./dist && mkdir ./dist/static && cp -r ./src/nunjucks ./src/js ./dist/static"
   },
   "author": "mxace",
   "devDependencies": {
