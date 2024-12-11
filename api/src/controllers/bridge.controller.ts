@@ -5,12 +5,16 @@ import CatchErrors from "../utils/catchErrors";
 
 export const updateLatestHandler = CatchErrors(async (req, res) => {
     Promise.all((await LatestItemModel.find().sort({ timestamp: -1 }).limit(16)).map(async (item) => {
+        const result = {
+            kind: item.kind,
+            timestamp: item.timestamp,
+            username: item.username
+        };
+
         if (item.kind == "SOURCE_RECVEIVED_REVIEW") {
             const source = await SourceModel.findById(item.sourceId);
             return {
-                kind: "SOURCE_RECVEIVED_REVIEW",
-                timestamp: item.timestamp,
-                username: item.username,
+                ...result,
                 source: {
                     id: item.sourceId,
                     link: source!.link
@@ -19,9 +23,7 @@ export const updateLatestHandler = CatchErrors(async (req, res) => {
         } else if (item.kind == "POST_EDITED" || item.kind == "POST_PUBLISHED") {
             const post = await PostModel.findById(item.postId);
             return {
-                kind: item.kind,
-                timestamp: item.timestamp,
-                username: item.username,
+                ...result,
                 post: {
                     id: item.postId,
                     urlName: post!.urlName,
@@ -30,13 +32,11 @@ export const updateLatestHandler = CatchErrors(async (req, res) => {
             };
         } else if (item.kind == "USER_REGISTERED") {
             return {
-                kind: item.kind,
-                timestamp: item.timestamp,
-                username: item.username
+                ...result
             };
         }
 
-        return {"A": "B"};
+        return result;
     })).then((results) => {
         res.send(results);
     });
