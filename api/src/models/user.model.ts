@@ -5,6 +5,7 @@ import { PASSWORD_SECRET } from "../constants/env";
 export interface UserDocument extends Mongoose.Document {
     _id: Mongoose.Schema.Types.ObjectId;
 
+    username: string;
     email: string;
     password: string;
     
@@ -16,6 +17,11 @@ export interface UserDocument extends Mongoose.Document {
 
 export const UserSchema = new Mongoose.Schema<UserDocument>(
     {
+        username: {
+            type: String,
+            required: true,
+            unique: true
+        },
         email: {
             type: String,
             required: true,

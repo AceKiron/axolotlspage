@@ -22,8 +22,8 @@ gulp.task("default", () => {
         .pipe(combineScss())
         .pipe(concat(paths.sass.filename))
         .pipe(sass(sassOptions).on("error", sass.logError))
-        .pipe(purgecss({
-            content: ["src/nunjucks/**/*.njk"]
-        }))
+        // .pipe(purgecss({
+        //     content: ["src/nunjucks/**/*.njk"]
+        // }))
         .pipe(gulp.dest(paths.sass.dest));
 });

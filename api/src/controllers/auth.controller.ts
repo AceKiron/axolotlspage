@@ -6,6 +6,7 @@ import { CREATED, OK } from "../constants/http";
 
 export const registerHandler = CatchErrors(async (req, res) => {
     const result = await registerUser({
+        username: req.body.username,
         email: req.body.email,
         password: req.body.password
     });

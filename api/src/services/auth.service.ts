@@ -6,12 +6,24 @@ import AppError from "../utils/appError";
 import { CONFLICT, UNAUTHORIZED } from "../constants/http";
 import AppResult from "../constants/appResult";
 import { PASSWORD_SECRET } from "../constants/env";
+import { requestUpdateLatestUpdate } from "../utils/bridge";
+import LatestItemModel from "../models/latestItem.model";
 
 type RegisterUserPayload = {
+    username: string;
     email: string;
     password: string;
 }
 export const registerUser = async (payload: RegisterUserPayload): Promise<AppResult<Mongoose.ObjectId>> => {
+    if (await UserModel.exists({
+        username: payload.username
+    })) {
+        return {
+            success: false,
+            err: new AppError(CONFLICT, `User with username '${payload.username} already exists.`)
+        };
+    }
+
     if (await UserModel.exists({
         email: payload.email
     })) {
@@ -22,11 +34,19 @@ export const registerUser = async (payload: RegisterUserPayload): Promise<AppRes
     }
 
     const model = new UserModel({
+        username: payload.username,
         email: payload.email,
         password: await Bcrypt.hash(payload.password + PASSWORD_SECRET, await Bcrypt.genSalt())
     });
 
     await model.save();
+
+    await new LatestItemModel({
+        kind: "USER_REGISTERED",
+        username: payload.username
+    }).save();
+
+    requestUpdateLatestUpdate();
 
     return {
         success: true,

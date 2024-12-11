@@ -1,0 +1,36 @@
+@use "sass:color";
+@use "sass:map";
+
+$colors: (
+    "black": $black-color,
+    "white": $white-color,
+    
+    "red": $red-color,
+    "orange": $orange-color,
+    "yellow": $yellow-color,
+    "green": $green-color,
+    "blue": $green-color,
+    "purple": $purple-color
+) !default;
+
+@each $key, $value in $colors {
+    @if $key != "white" {
+        @for $i from 1 through 9 {
+            $colors: map.set($colors, "#{$key}-#{$i}", color.mix($value, $white-color, calc(10% * $i)));
+        }
+    }
+}
+
+@each $key, $value in $colors {
+    .text-#{$key} {
+        color: $value;
+    }
+
+    .bg-#{$key} {
+        background-color: $value;
+    }
+
+    .border-#{$key} {
+        border-color: $value;
+    }
+}

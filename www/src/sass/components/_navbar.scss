@@ -1,0 +1,10 @@
+nav ul {
+    list-style-type: none;
+
+    li {
+        @extend .p-2;
+
+        display: inline;
+        text-transform: uppercase;
+    }
+}

@@ -8,9 +8,5 @@ const getEnv = (key: string, defaultValue?: string): string => {
     return value;
 }
 
-export const MONGO_URI = getEnv("MONGO_URI", "mongodb://localhost:27017/axolotlspage");
-export const PASSWORD_SECRET = getEnv("PASSWORD_SECRET", "axolotlsarecute");
-export const ACCESS_TOKEN_SECRET = getEnv("ACCESS_TOKEN_SECRET", "access");
-export const REFRESH_TOKEN_SECRET = getEnv("REFRESH_TOKEN_SECRET", "refresh");
 export const UPDATE_LATEST_URL = getEnv("UPDATE_LATEST_URL", "/update-latest");
 export const UPDATE_LATEST_USER_AGENT = getEnv("UPDATE_LATEST_USER_AGENT");

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Axolotlspage</title>
+
+        <link rel="stylesheet" href="/public/bundle.css">
+    </head>
+    <body>
+        <script defer src="/public/js/index.js"></script>
+
+        <script src="/public/js/cookie.js"></script>
+
+        <nav class="w-100 bg-red-2 p-2 text-black-8">
+            <ul>
+                <li class="font-bold"><a href="#" locale-key="NAV_HOMEPAGE">Homepage</a></li>
+                <li><a href="#" locale-key="NAV_REVIEWS">Reviews</a></li>
+                <li><a href="#" locale-key="NAV_FORUM">Forum</a></li>
+                {% if username %}
+                <li><a href="#" locale-key="NAV_SIGN_OUT">Sign out</a></li>
+                {% else %}
+                <li><a href="#" locale-key="NAV_SIGN_IN">Sign in</a></li>
+                <li><a href="#" locale-key="NAV_REGISTER">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <div class="d-grid pt-1 grid-cols-2">
+            <div class="p-2 col-1">
+                <h2 class="font-bold text-red-5 pb-1">Latest</h2>
+                
+                <table class="latest">
+                    {% for item in latest %}
+                    <tr>
+                        <td>{{ item.time }}</td>
+                        <td>{{ item.html | safe }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="p-2 col-1">
+                <div class="bg-black-1 mx-2 my-3 p-4">
+                    
+                </div>
+                <div class="bg-black-1 mx-2 my-3 p-4">
+                    
+                </div>
+                <div class="bg-black-1 mx-2 my-3 p-4">
+                    
+                </div>
+            </div>
+        </div>
+
+        <script src="/public/js/locale.js"></script>
+    </body>
+</html>

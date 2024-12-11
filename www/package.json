@@ -4,21 +4,24 @@
   },
   "author": "mxace",
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/nunjucks": "^3.2.6",
     "gulp": "^5.0.0",
     "gulp-concat": "^2.6.1",
-    "gulp-purgecss": "^6.0.0",
-    "gulp-sass": "^5.1.0",
+    "gulp-purgecss": "^7.0.2",
+    "gulp-sass": "^6.0.0",
     "gulp-scss-combine": "^1.0.0",
     "sass": "^1.77.8",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.2"
   },
   "dependencies": {
+    "axios": "^1.7.9",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "express": "^4.21.2",
+    "express": "^5.0.1",
     "nunjucks": "^3.2.4"
   }
 }
