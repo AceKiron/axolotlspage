@@ -1,6 +1,6 @@
 import LatestItemModel from "../models/latestItem.model";
 import PostModel from "../models/post.model";
-import SourceModel from "../models/source.model";
+import SourceHostModel from "../models/sourceHost.model";
 import CatchErrors from "../utils/catchErrors";
 
 export const updateLatestHandler = CatchErrors(async (req, res) => {
@@ -11,13 +11,13 @@ export const updateLatestHandler = CatchErrors(async (req, res) => {
             username: item.username
         };
 
-        if (item.kind == "SOURCE_RECVEIVED_REVIEW") {
-            const source = await SourceModel.findById(item.sourceId);
+        if (item.kind == "SOURCEHOST_RECEIVED_REVIEW") {
+            const sourceHost = await SourceHostModel.findById(item.sourceHostId);
             return {
                 ...result,
-                source: {
-                    id: item.sourceId,
-                    link: source!.link
+                sourceHost: {
+                    id: item.sourceHostId,
+                    hostname: sourceHost!.hostname
                 }
             };
         } else if (item.kind == "POST_EDITED" || item.kind == "POST_PUBLISHED") {

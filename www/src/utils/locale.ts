@@ -17,13 +17,13 @@ export const translate = (payload: any, locale: string, timezone: string): Trans
     let html = "";
 
     if (locale == "nl-NL") {
-        if (payload.kind == "SOURCE_RECVEIVED_REVIEW") html = `<a href="/source/${payload.source.id}/${payload.source.link}" class="highlight">${payload.source.link}</a> heeft een waardering ontvangen van ${payload.username}`;
+        if (payload.kind == "SOURCEHOST_RECVEIVED_REVIEW") html = `<a href="/source/${payload.source.id}/${payload.source.hostname}" class="highlight">${payload.source.hostname}</a> heeft een waardering ontvangen van ${payload.username}`;
         else if (payload.kind == "POST_EDITED") html = `Post <a href="/post/${payload.post.id}/${payload.post.urlName}" class="highlight">${payload.post.displayName}</a> is bewerkt door ${payload.username}`;
         else if (payload.kind == "POST_PUBLISHED") html = `Post <a href="/post/${payload.post.id}/${payload.post.urlName}" class="highlight">${payload.post.displayName}</a> is gepubliceerd door ${payload.username}`;
         else if (payload.kind == "USER_REGISTERED") html = `${payload.username} is geregistreerd`;
     }
     else if (locale == "en-GB") {
-        if (payload.kind == "SOURCE_RECVEIVED_REVIEW") html = `<a href="/source/${payload.source.id}/${payload.source.link}" class="highlight">${payload.source.link}</a> received a review from ${payload.username}`;
+        if (payload.kind == "SOURCEHOST_RECVEIVED_REVIEW") html = `<a href="/source/${payload.source.id}/${payload.source.hostname}" class="highlight">${payload.source.hostname}</a> received a review from ${payload.username}`;
         else if (payload.kind == "POST_EDITED") html = `Post <a href="/post/${payload.post.id}/${payload.post.urlName}" class="highlight">${payload.post.displayName}</a> was edited by ${payload.username}`;
         else if (payload.kind == "POST_PUBLISHED") html = `Post <a href="/post/${payload.post.id}/${payload.post.urlName}" class="highlight">${payload.post.displayName}</a> was published by ${payload.username}`;
         else if (payload.kind == "USER_REGISTERED") html = `${payload.username} has registered`;

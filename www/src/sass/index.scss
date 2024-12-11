@@ -34,10 +34,14 @@ $sizes: (
     box-sizing: border-box;
 
     color: $black-color;
+
+    font-family: Verdana, sans-serif;
 }
 
 body {
     background-color: $white-color;
+    
+    font-size: $md-size;
 }
 
 a {

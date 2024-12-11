@@ -3,7 +3,7 @@ import Mongoose from "mongoose";
 export interface LatestItemDocument extends Mongoose.Document {
     _id: Mongoose.Schema.Types.ObjectId;
 
-    sourceId: Mongoose.Schema.Types.ObjectId;
+    sourceHostId: Mongoose.Schema.Types.ObjectId;
     postId: Mongoose.Schema.Types.ObjectId;
 
     kind: string;
@@ -13,9 +13,9 @@ export interface LatestItemDocument extends Mongoose.Document {
 
 export const LatestItemSchema = new Mongoose.Schema<LatestItemDocument>(
     {
-        sourceId: {
+        sourceHostId: {
             type: Mongoose.Schema.Types.ObjectId,
-            ref: "Source",
+            ref: "SourceHost",
         },
         postId: {
             type: Mongoose.Schema.Types.ObjectId,
@@ -24,7 +24,7 @@ export const LatestItemSchema = new Mongoose.Schema<LatestItemDocument>(
         kind: {
             type: String,
             required: true,
-            enum: ["SOURCE_RECVEIVED_REVIEW", "POST_EDITED", "POST_PUBLISHED", "USER_REGISTERED"]
+            enum: ["SOURCEHOST_RECEIVED_REVIEW", "POST_EDITED", "POST_PUBLISHED", "USER_REGISTERED"]
         },
         timestamp: {
             type: Date,
