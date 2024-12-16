@@ -16,3 +16,7 @@ Content-Type: application/json
     "email": "test@email.com",
     "password": "testPass"
 }
+
+###
+
+GET http://localhost:3157/session/info

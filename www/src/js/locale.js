@@ -18,6 +18,8 @@ const translate = (key) => {
     }
 }
 
-document.querySelectorAll("[locale-key]").forEach((item) => {
+const translateElement = (item) => {
     item.innerText = translate(item.getAttribute("locale-key"));
-});
+}
+
+document.querySelectorAll("[locale-key]").forEach(translateElement);

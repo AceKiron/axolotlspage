@@ -6,6 +6,7 @@ import ConnectToDatabase from "./config/db";
 
 import AuthRoutes from "./routes/auth.route";
 import BridgeRoutes from "./routes/bridge.route";
+import SessionRoutes from "./routes/session.route";
 
 const App = Express();
 
@@ -20,8 +21,8 @@ App.get("/", (req, res) => {
 });
 
 App.use("/auth", AuthRoutes);
-
 App.use("/bridge", BridgeRoutes);
+App.use("/session", SessionRoutes);
 
 App.listen(3157, async () => {
     console.log("Listening on http://localhost:3157/");

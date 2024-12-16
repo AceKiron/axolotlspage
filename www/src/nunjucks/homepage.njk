@@ -9,21 +9,17 @@
         <link rel="stylesheet" href="/public/bundle.css">
     </head>
     <body>
-        <script defer src="/public/js/index.js"></script>
-
-        <script src="/public/js/cookie.js"></script>
-
         <nav class="w-100 bg-red-2 p-2 text-black-8">
             <ul>
                 <li class="font-bold"><a href="#" locale-key="NAV_HOMEPAGE">Homepage</a></li>
                 <li><a href="#" locale-key="NAV_REVIEWS">Reviews</a></li>
                 <li><a href="#" locale-key="NAV_FORUM">Forum</a></li>
-                {% if username %}
+                {# {% if authenticated %}
                 <li><a href="#" locale-key="NAV_SIGN_OUT">Sign out</a></li>
                 {% else %}
                 <li><a href="#" locale-key="NAV_SIGN_IN">Sign in</a></li>
                 <li><a href="#" locale-key="NAV_REGISTER">Register</a></li>
-                {% endif %}
+                {% endif %} #}
             </ul>
         </nav>
 
@@ -53,6 +49,8 @@
             </div>
         </div>
 
+        <script src="/public/js/cookie.js"></script>
         <script src="/public/js/locale.js"></script>
+        <script src="/public/js/index.js"></script>
     </body>
 </html>

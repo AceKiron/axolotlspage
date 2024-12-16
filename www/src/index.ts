@@ -35,7 +35,7 @@ StaticFile("js/index.js", "text/javascript");
 StaticFile("js/locale.js", "text/javascript");
 
 const updateLatest = async () => {
-    rawLatest = (await Axios.get("http://api:3157/bridge/latest")).data;
+    rawLatest = (await Axios.get("http://api:3157/bridge/latest")).data.results;
     latest = {};
     // rawLatest = [
     //     {
@@ -90,8 +90,7 @@ App.get("/", RegisterCookies, (req, res) => {
     }
 
     res.render("homepage.njk", {
-        latest: latest[`${res.locals.locale}-${res.locals.timezone}`][1],
-        username: "_Mx_Ace"
+        latest: latest[`${res.locals.locale}-${res.locals.timezone}`][1]
     });
 });
 

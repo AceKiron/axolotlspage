@@ -3,7 +3,7 @@ import PostModel from "../models/post.model";
 import SourceHostModel from "../models/sourceHost.model";
 import CatchErrors from "../utils/catchErrors";
 
-export const updateLatestHandler = CatchErrors(async (req, res) => {
+export const updateLatestHandler = CatchErrors(async (req, res, next) => {
     Promise.all((await LatestItemModel.find().sort({ timestamp: -1 }).limit(16)).map(async (item) => {
         const result = {
             kind: item.kind,
@@ -38,6 +38,11 @@ export const updateLatestHandler = CatchErrors(async (req, res) => {
 
         return result;
     })).then((results) => {
-        res.send(results);
+        res.locals.result = {
+            ...res.locals.result,
+            results
+        }
+
+        return next();
     });
 });

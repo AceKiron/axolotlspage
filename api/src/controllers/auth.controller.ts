@@ -4,7 +4,7 @@ import { registerUser, loginUser } from "../services/auth.service";
 import { createSession } from "../services/session.service";
 import { CREATED, OK } from "../constants/http";
 
-export const registerHandler = CatchErrors(async (req, res) => {
+export const registerHandler = CatchErrors(async (req, res, next) => {
     const result = await registerUser({
         username: req.body.username,
         email: req.body.email,
@@ -12,9 +12,12 @@ export const registerHandler = CatchErrors(async (req, res) => {
     });
 
     if (!result.success) {
-        return res.status(result.err.status).send({
-            message: result.err.message
-        });
+        res.locals.status = result.err.status;
+        res.locals.result = {
+            ...res.locals.result,
+            error: result.err.message
+        };
+        return next();
     }
 
     const result2 = await createSession({
@@ -24,26 +27,43 @@ export const registerHandler = CatchErrors(async (req, res) => {
     });
 
     if (!result2.success) {
-        return res.status(result2.err.status).send({
-            message: result2.err.message
-        });
+        res.locals.status = result2.err.status;
+        res.locals.result = {
+            ...res.locals.result,
+            error: result2.err.message
+        };
+        return next();
     }
 
-    return res.status(CREATED).send({
-        session: result2.data
-    });
+    res.locals.status = CREATED;
+    res.locals.result = {
+        ...res.locals.result,
+        accessToken: {
+            value: result2.data[0],
+            maxAge: 45 * 60 * 1000
+        },
+        refreshToken: {
+            value: result2.data[1],
+            maxAge: 30 * 24 * 60 * 60 * 1000
+        }
+    };
+
+    return next();
 });
 
-export const loginHandler = CatchErrors(async (req, res) => {
+export const loginHandler = CatchErrors(async (req, res, next) => {
     const result = await loginUser({
         email: req.body.email,
         password: req.body.password
     });
 
     if (!result.success) {
-        return res.status(result.err.status).send({
-            message: result.err.message
-        });
+        res.locals.status = result.err.status;
+        res.locals.result = {
+            ...res.locals.result,
+            error: result.err.message
+        };
+        return next();
     }
 
     const result2 = await createSession({
@@ -53,12 +73,26 @@ export const loginHandler = CatchErrors(async (req, res) => {
     });
 
     if (!result2.success) {
-        return res.status(result2.err.status).send({
-            message: result2.err.message
-        });
+        res.locals.status = result2.err.status;
+        res.locals.result = {
+            ...res.locals.result,
+            error: result2.err.message
+        };
+        return next();
     }
 
-    return res.status(OK).send({
-        session: result2.data
-    });
+    res.locals.status = OK;
+    res.locals.result = {
+        ...res.locals.result,
+        accessToken: {
+            value: result2.data[0],
+            maxAge: 45 * 60 * 1000
+        },
+        refreshToken: {
+            value: result2.data[1],
+            maxAge: 30 * 24 * 60 * 60 * 1000
+        }
+    };
+
+    return next();
 });

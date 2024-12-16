@@ -10,6 +10,7 @@ export default (controller: AsyncController): AsyncController => async (req, res
     try {
         await controller(req, res, next);
     } catch (err) {
-        next(err);
+        res.locals.err = err;
+        next();
     }
 }
